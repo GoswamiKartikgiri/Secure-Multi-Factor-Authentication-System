@@ -4,3 +4,17 @@ __pycache__/
 instance/
 venv/
 .venv/
+
+# Generated QR codes
+static/qrcodes/*.png
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.venv/
