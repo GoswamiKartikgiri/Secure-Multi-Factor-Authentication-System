@@ -1,0 +1,147 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+Analytics
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    <i class="bi bi-bar-chart-fill"></i>
+    Security Analytics
+</h2>
+
+<div class="row">
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card">
+
+            <div class="card-header">
+                2FA Adoption
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="twofaChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card">
+
+            <div class="card-header">
+                Account Status
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="accountChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+                Login Statistics
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="loginChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+new Chart(document.getElementById("twofaChart"),{
+
+    type:"pie",
+
+    data:{
+
+        labels:["2FA Enabled","2FA Disabled"],
+
+        datasets:[{
+
+            data:[
+                {{ total_2fa }},
+                {{ disabled_2fa }}
+            ]
+
+        }]
+
+    }
+
+});
+
+new Chart(document.getElementById("accountChart"),{
+
+    type:"doughnut",
+
+    data:{
+
+        labels:["Active","Locked"],
+
+        datasets:[{
+
+            data:[
+                {{ active_accounts }},
+                {{ locked_accounts }}
+            ]
+
+        }]
+
+    }
+
+});
+
+new Chart(document.getElementById("loginChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:["Successful","Failed"],
+
+        datasets:[{
+
+            label:"Login Attempts",
+
+            data:[
+                {{ successful_logins }},
+                {{ failed_logins }}
+            ]
+
+        }]
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

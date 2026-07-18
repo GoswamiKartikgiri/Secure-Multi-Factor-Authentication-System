@@ -1,0 +1,811 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2>
+
+                <i class="bi bi-speedometer2"></i>
+
+                Administrator Dashboard
+
+            </h2>
+
+            <p class="text-muted">
+
+                Welcome,
+
+                <strong>{{ session["admin_name"] }}</strong>
+
+            </p>
+
+        </div>
+
+        <div>
+
+            <a
+                href="{{ url_for('home') }}"
+                class="btn btn-outline-primary">
+
+                <i class="bi bi-house-fill"></i>
+
+                Home
+
+            </a>
+
+            <a
+                href="{{ url_for('admin.logout') }}"
+                class="btn btn-danger">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card bg-primary text-white shadow mb-4">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-people-fill display-3"></i>
+
+                    <h5 class="mt-3">
+
+                        Total Users
+
+                    </h5>
+
+                    <h2>
+
+                        {{ total_users }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card bg-success text-white shadow mb-4">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-shield-check display-3"></i>
+
+                    <h5 class="mt-3">
+
+                        2FA Enabled
+
+                    </h5>
+
+                    <h2>
+
+                        {{ total_2fa }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card bg-danger text-white shadow mb-4">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-lock-fill display-3"></i>
+
+                    <h5 class="mt-3">
+
+                        Locked Accounts
+
+                    </h5>
+
+                    <h2>
+
+                        {{ locked_accounts }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card bg-dark text-white shadow mb-4">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-journal-text display-3"></i>
+
+                    <h5 class="mt-3">
+
+                        Security Logs
+
+                    </h5>
+
+                    <h2>
+
+                        {{ total_logs }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- System Status -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header bg-success text-white">
+
+            <i class="bi bi-server"></i>
+
+            System Status
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row text-center">
+
+                <div class="col-md-3">
+
+                    <h5>
+
+                        Database
+
+                    </h5>
+
+                    <span class="badge bg-success">
+
+                        Online
+
+                    </span>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <h5>
+
+                        Email Service
+
+                    </h5>
+
+                    <span class="badge bg-success">
+
+                        Connected
+
+                    </span>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <h5>
+
+                        Google 2FA
+
+                    </h5>
+
+                    <span class="badge bg-success">
+
+                        Active
+
+                    </span>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <h5>
+
+                        Flask Server
+
+                    </h5>
+
+                    <span class="badge bg-success">
+
+                        Running
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <i class="bi bi-lightning-fill"></i>
+
+            Quick Actions
+
+        </div>
+
+        <div class="card-body">
+
+            <a
+                href="{{ url_for('admin.users') }}"
+                class="btn btn-primary me-2 mb-2">
+
+                <i class="bi bi-people-fill"></i>
+
+                Manage Users
+
+            </a>
+
+            <a
+                href="{{ url_for('admin.logs') }}"
+                class="btn btn-secondary me-2 mb-2">
+
+                <i class="bi bi-journal-text"></i>
+
+                Security Logs
+
+            </a>
+
+            <a
+                href="{{ url_for('admin.analytics') }}"
+                class="btn btn-success me-2 mb-2">
+
+                <i class="bi bi-bar-chart-fill"></i>
+
+                Analytics
+
+            </a>
+
+            <a
+                href="{{ url_for('admin.export_users') }}"
+                class="btn btn-info text-white me-2 mb-2">
+
+                <i class="bi bi-download"></i>
+
+                Export Users
+
+            </a>
+
+            <a
+                href="{{ url_for('admin.export_logs') }}"
+                class="btn btn-warning me-2 mb-2">
+
+                <i class="bi bi-download"></i>
+
+                Export Logs
+
+            </a>
+                    </div>
+
+    </div>
+
+    <!-- Security Overview -->
+
+    <div class="row mb-4">
+
+        <div class="col-lg-4">
+
+            <div class="card border-success shadow">
+
+                <div class="card-header bg-success text-white">
+
+                    Security Overview
+
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+
+                        <strong>Total Registered Users :</strong>
+
+                        {{ total_users }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>2FA Enabled :</strong>
+
+                        {{ total_2fa }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Locked Accounts :</strong>
+
+                        {{ locked_accounts }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Total Security Logs :</strong>
+
+                        {{ total_logs }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    Quick Statistics
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row text-center">
+
+                        <div class="col-md-3">
+
+                            <h4 class="text-primary">
+
+                                {{ total_users }}
+
+                            </h4>
+
+                            <small>
+
+                                Users
+
+                            </small>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h4 class="text-success">
+
+                                {{ total_2fa }}
+
+                            </h4>
+
+                            <small>
+
+                                2FA Active
+
+                            </small>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h4 class="text-danger">
+
+                                {{ locked_accounts }}
+
+                            </h4>
+
+                            <small>
+
+                                Locked
+
+                            </small>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h4 class="text-dark">
+
+                                {{ total_logs }}
+
+                            </h4>
+
+                            <small>
+
+                                Logs
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Tables -->
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow mb-4">
+
+                <div class="card-header bg-primary text-white">
+
+                    <i class="bi bi-person-plus-fill"></i>
+
+                    Latest Registered Users
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-hover table-bordered">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>Name</th>
+
+                                <th>Email</th>
+
+                                <th>2FA</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for user in recent_users %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ user.full_name }}
+
+                            </td>
+
+                            <td>
+
+                                {{ user.email }}
+
+                            </td>
+
+                            <td>
+
+                                {% if user.is_2fa_enabled %}
+
+                                    <span class="badge bg-success">
+
+                                        Enabled
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Disabled
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card shadow mb-4">
+
+                <div class="card-header bg-secondary text-white">
+
+                    <i class="bi bi-shield-lock-fill"></i>
+
+                    Recent Security Activities
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-striped table-hover">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>User</th>
+
+                                <th>Activity</th>
+
+                                <th>Time</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for log in recent_logs %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ log.user_email }}
+
+                            </td>
+
+                            <td>
+
+                                {{ log.activity }}
+
+                            </td>
+
+                            <td>
+
+                                {{ log.created_at }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+        <!-- Footer Information -->
+
+    <div class="row">
+
+        <div class="col-lg-4">
+
+            <div class="card border-primary shadow mb-4">
+
+                <div class="card-header bg-primary text-white">
+
+                    <i class="bi bi-person-badge-fill"></i>
+
+                    Administrator
+
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+
+                        <strong>Name :</strong>
+
+                        {{ session["admin_name"] }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Role :</strong>
+
+                        Super Administrator
+
+                    </p>
+
+                    <p>
+
+                        <strong>Status :</strong>
+
+                        <span class="badge bg-success">
+
+                            Online
+
+                        </span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-success shadow mb-4">
+
+                <div class="card-header bg-success text-white">
+
+                    <i class="bi bi-server"></i>
+
+                    Server Information
+
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+
+                        <strong>Framework :</strong>
+
+                        Flask
+
+                    </p>
+
+                    <p>
+
+                        <strong>Database :</strong>
+
+                        MySQL
+
+                    </p>
+
+                    <p>
+
+                        <strong>Authentication :</strong>
+
+                        Google Authenticator (TOTP)
+
+                    </p>
+
+                    <p>
+
+                        <strong>Email :</strong>
+
+                        Flask-Mail
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-dark shadow mb-4">
+
+                <div class="card-header bg-dark text-white">
+
+                    <i class="bi bi-graph-up-arrow"></i>
+
+                    Project Information
+
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+
+                        <strong>Project :</strong>
+
+                        Secure Two-Factor Authentication System
+
+                    </p>
+
+                    <p>
+
+                        <strong>Technology :</strong>
+
+                        Python • Flask • MySQL
+
+                    </p>
+
+                    <p>
+
+                        <strong>Version :</strong>
+
+                        1.0
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Dashboard Footer -->
+
+    <div class="card shadow">
+
+        <div class="card-body text-center">
+
+            <h5>
+
+                🔐 Secure Two-Factor Authentication System
+
+            </h5>
+
+            <p class="mb-1">
+
+                Master's in Cyber Security & Digital Forensics
+
+            </p>
+
+            <p class="mb-1">
+
+                Final Year Project
+
+            </p>
+
+            <p class="text-muted mb-0">
+
+                Developed by
+
+                <strong>
+
+                    Mr. KartikGiri Goswami
+
+                </strong>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

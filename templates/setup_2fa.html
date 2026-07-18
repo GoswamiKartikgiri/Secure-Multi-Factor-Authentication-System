@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+Setup 2FA
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Google Authenticator Setup</h3>
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <h5>Step 1</h5>
+
+            <p>Install Google Authenticator on your mobile phone.</p>
+
+            <hr>
+
+            <h5>Step 2</h5>
+
+            <p>Scan this QR Code.</p>
+
+            <img src="{{ qr_path }}" width="250">
+
+            <hr>
+
+            <h5>Backup Secret Key</h5>
+
+            <div class="alert alert-warning">
+
+                {{ secret }}
+
+            </div>
+
+            <hr>
+
+            <a href="{{ url_for('twofa.verify_2fa') }}"
+               class="btn btn-success btn-lg">
+
+                Next →
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

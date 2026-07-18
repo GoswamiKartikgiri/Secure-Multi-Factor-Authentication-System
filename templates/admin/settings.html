@@ -1,0 +1,110 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+    <i class="bi bi-gear-fill"></i>
+
+    Administrator Settings
+
+</h2>
+
+<div class="card">
+
+    <div class="card-header bg-dark text-white">
+
+        System Information
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <tr>
+                <th width="30%">Project</th>
+                <td>Multi-Factor Authentication System</td>
+            </tr>
+
+            <tr>
+                <th>Developer</th>
+                <td>Mr. KartikGiri Goswami</td>
+            </tr>
+
+            <tr>
+                <th>Framework</th>
+                <td>Flask</td>
+            </tr>
+
+            <tr>
+                <th>Database</th>
+                <td>MySQL</td>
+            </tr>
+
+            <tr>
+                <th>Authentication</th>
+                <td>Google Authenticator (TOTP)</td>
+            </tr>
+
+            <tr>
+                <th>Password Hashing</th>
+                <td>BCrypt</td>
+            </tr>
+
+            <tr>
+                <th>Current Version</th>
+                <td>Version 1.0</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div class="card mt-4">
+
+    <div class="card-header bg-primary text-white">
+
+        Security Features
+
+    </div>
+
+    <div class="card-body">
+
+        <ul>
+
+            <li>User Registration</li>
+
+            <li>Password Hashing</li>
+
+            <li>Google Authenticator</li>
+
+            <li>Recovery Codes</li>
+
+            <li>Account Lockout Protection</li>
+
+            <li>OTP Lockout Protection</li>
+
+            <li>Security Logging</li>
+
+            <li>Admin Dashboard</li>
+
+            <li>Analytics Dashboard</li>
+
+            <li>CSV Report Export</li>
+
+            <li>PDF Report Export</li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+{% endblock %}

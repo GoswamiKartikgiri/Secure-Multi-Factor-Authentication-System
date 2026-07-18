@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+Verify 2FA
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white">
+
+                    <h3>Verify Google Authenticator</h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Enter the 6-digit code
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="otp"
+                                maxlength="6"
+                                class="form-control"
+                                required
+                            >
+
+                        </div>
+
+                        <button
+                            class="btn btn-success w-100">
+
+                            Verify OTP
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
